@@ -3,6 +3,7 @@ const cors = require('cors');
 const dotenv = require('dotenv');
 const connectDB = require('./config/db');
 const authRoutes = require('./routes/authRoutes');
+const donorRoutes = require('./routes/donorRoutes');
 
 // Load environment variables from .env
 dotenv.config();
@@ -29,8 +30,9 @@ app.get('/api/health', (req, res) => {
   });
 });
 
-// Auth routes
+// Feature routes
 app.use('/api/auth', authRoutes);
+app.use('/api/donors', donorRoutes);
 
 // Fallback for unknown routes
 app.use((req, res) => {
