@@ -4,6 +4,7 @@ const dotenv = require('dotenv');
 const connectDB = require('./config/db');
 const authRoutes = require('./routes/authRoutes');
 const donorRoutes = require('./routes/donorRoutes');
+const donationRoutes = require('./routes/donationRoutes');
 
 // Load environment variables from .env
 dotenv.config();
@@ -33,6 +34,7 @@ app.get('/api/health', (req, res) => {
 // Feature routes
 app.use('/api/auth', authRoutes);
 app.use('/api/donors', donorRoutes);
+app.use('/api/donations', donationRoutes);
 
 // Fallback for unknown routes
 app.use((req, res) => {
