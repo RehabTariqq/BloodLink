@@ -1,6 +1,6 @@
 const BloodDonation = require('../models/BloodDonation');
 const Donor = require('../models/Donor');
-
+require('../models/Hospital');
 // @desc    Record a new blood donation
 // @route   POST /api/donations
 // @access  Private (bloodBankStaff, hospitalAdmin, superAdmin)

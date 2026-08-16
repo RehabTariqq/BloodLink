@@ -5,47 +5,45 @@ const connectDB = require('./config/db');
 const authRoutes = require('./routes/authRoutes');
 const donorRoutes = require('./routes/donorRoutes');
 const donationRoutes = require('./routes/donationRoutes');
+const inventoryRoutes = require('./routes/inventoryRoutes');
+const requestRoutes = require('./routes/requestRoutes');
+const hospitalRoutes = require('./routes/hospitalRoutes');
+const appointmentRoutes = require('./routes/appointmentRoutes');
+const notificationRoutes = require('./routes/notificationRoutes');
+const auditRoutes = require('./routes/auditRoutes');
+const compatibilityRoutes = require('./routes/compatibilityRoutes');
+const reportRoutes = require('./routes/reportRoutes');
 
-// Load environment variables from .env
 dotenv.config();
-
-// Connect to MongoDB
 connectDB();
 
 const app = express();
 
-// Middleware
-app.use(cors({
-  origin: process.env.CLIENT_URL || 'http://localhost:5173',
-  credentials: true
-}));
+app.use(cors({ origin: process.env.CLIENT_URL || 'http://localhost:5173', credentials: true }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Basic health check route
 app.get('/api/health', (req, res) => {
-  res.status(200).json({
-    status: 'success',
-    message: 'BloodLink API is running',
-    timestamp: new Date().toISOString()
-  });
+  res.status(200).json({ status: 'success', message: 'BloodLink API is running', timestamp: new Date().toISOString() });
 });
 
-// Feature routes
 app.use('/api/auth', authRoutes);
 app.use('/api/donors', donorRoutes);
 app.use('/api/donations', donationRoutes);
+app.use('/api/inventory', inventoryRoutes);
+app.use('/api/requests', requestRoutes);
+app.use('/api/hospitals', hospitalRoutes);
+app.use('/api/appointments', appointmentRoutes);
+app.use('/api/notifications', notificationRoutes);
+app.use('/api/audit-logs', auditRoutes);
+app.use('/api/compatibility', compatibilityRoutes);
+app.use('/api/reports', reportRoutes);
 
-// Fallback for unknown routes
 app.use((req, res) => {
-  res.status(404).json({
-    status: 'error',
-    message: 'Route not found'
-  });
+  res.status(404).json({ status: 'error', message: 'Route not found' });
 });
 
 const PORT = process.env.PORT || 5000;
-
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
