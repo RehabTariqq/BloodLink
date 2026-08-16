@@ -11,8 +11,8 @@ const { protect, authorize } = require('../middleware/authMiddleware');
 const staffOnly = authorize('bloodBankStaff', 'hospitalAdmin', 'superAdmin');
 
 router.post('/', protect, staffOnly, createBloodUnit);
-router.get('/', protect, staffOnly, getBloodUnits);
-router.get('/summary', protect, staffOnly, getInventorySummary);
+router.get('/', protect, getBloodUnits);
+router.get('/summary', protect, getInventorySummary);
 router.put('/:id', protect, staffOnly, updateBloodUnit);
 
 module.exports = router;

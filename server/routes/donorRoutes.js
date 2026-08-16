@@ -9,7 +9,7 @@ const {
 const { protect, authorize } = require('../middleware/authMiddleware');
 
 router.post('/', protect, createDonor);
-router.get('/', protect, authorize('hospitalAdmin', 'bloodBankStaff', 'doctor', 'superAdmin'), getDonors);
+router.get('/', protect, getDonors);
 router.get('/:id', protect, getDonorById);
 router.put('/:id', protect, updateDonor);
 

@@ -3,6 +3,6 @@ const router = express.Router();
 const { getDashboardStats } = require('../controllers/reportController');
 const { protect, authorize } = require('../middleware/authMiddleware');
 
-router.get('/dashboard', protect, authorize('bloodBankStaff', 'hospitalAdmin', 'superAdmin'), getDashboardStats);
+router.get('/dashboard', protect, getDashboardStats);
 
 module.exports = router;

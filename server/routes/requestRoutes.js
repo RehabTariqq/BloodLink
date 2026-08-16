@@ -14,8 +14,8 @@ const staffOnly = authorize('bloodBankStaff', 'hospitalAdmin', 'superAdmin');
 
 router.post('/', protect, requesterRoles, createRequest);
 router.get('/', protect, requesterRoles, getRequests);
-router.get('/:id', protect, requesterRoles, getRequestById);
-router.put('/:id', protect, staffOnly, updateRequestStatus);
+router.get('/', protect, getRequests);
+router.get('/:id', protect, getRequestById);
 router.post('/:id/issue', protect, staffOnly, issueUnitToRequest);
 
 module.exports = router;
