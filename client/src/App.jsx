@@ -11,7 +11,7 @@ import Contact from './pages/Contact';
 import DashboardLayout from './layouts/DashboardLayout';
 import PublicLayout from './layouts/PublicLayout';
 import { useAuth } from './context/AuthContext';
-
+import DonorProfile from './pages/DonorProfile';
 function App() {
   const { isAuthenticated, loading } = useAuth();
 
@@ -35,6 +35,7 @@ function App() {
         <Route path="donors" element={<Donors />} />
         <Route path="inventory" element={<Inventory />} />
         <Route path="requests" element={<Requests />} />
+        <Route path="my-profile" element={<DonorProfile />} />
       </Route>
     </Routes>
   );

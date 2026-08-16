@@ -34,3 +34,13 @@ export const hospitalService = {
 export const reportService = {
   getDashboardStats: () => api.get('/reports/dashboard')
 };
+export const appointmentService = {
+  create: (data) => api.post('/appointments', data),
+  getAll: (params) => api.get('/appointments', { params }),
+  update: (id, data) => api.put(`/appointments/${id}`, data)
+};
+
+export const notificationService = {
+  getAll: () => api.get('/notifications'),
+  markRead: (id) => api.put(`/notifications/${id}/read`)
+};

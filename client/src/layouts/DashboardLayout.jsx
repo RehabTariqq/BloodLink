@@ -17,17 +17,20 @@ const DashboardLayout = () => {
         </div>
         <nav className="sidebar-nav">
           <NavLink to="/app/dashboard" className={({ isActive }) => `sidebar-link ${isActive ? 'active' : ''}`}>
-  Overview
-</NavLink>
-<NavLink to="/app/donors" className={({ isActive }) => `sidebar-link ${isActive ? 'active' : ''}`}>
-  Donors
-</NavLink>
-<NavLink to="/app/inventory" className={({ isActive }) => `sidebar-link ${isActive ? 'active' : ''}`}>
-  Inventory
-</NavLink>
-<NavLink to="/app/requests" className={({ isActive }) => `sidebar-link ${isActive ? 'active' : ''}`}>
-  Blood Requests
-</NavLink>
+            Overview
+          </NavLink>
+          <NavLink to="/app/my-profile" className={({ isActive }) => `sidebar-link ${isActive ? 'active' : ''}`}>
+            My Donor Profile
+          </NavLink>
+          <NavLink to="/app/donors" className={({ isActive }) => `sidebar-link ${isActive ? 'active' : ''}`}>
+            Donors
+          </NavLink>
+          <NavLink to="/app/inventory" className={({ isActive }) => `sidebar-link ${isActive ? 'active' : ''}`}>
+            Inventory
+          </NavLink>
+          <NavLink to="/app/requests" className={({ isActive }) => `sidebar-link ${isActive ? 'active' : ''}`}>
+            Blood Requests
+          </NavLink>
         </nav>
       </aside>
 
