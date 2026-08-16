@@ -16,18 +16,18 @@ const DashboardLayout = () => {
           </span>
         </div>
         <nav className="sidebar-nav">
-          <NavLink to="/dashboard" className={({ isActive }) => `sidebar-link ${isActive ? 'active' : ''}`}>
-            Overview
-          </NavLink>
-          <NavLink to="/donors" className={({ isActive }) => `sidebar-link ${isActive ? 'active' : ''}`}>
-            Donors
-          </NavLink>
-          <NavLink to="/inventory" className={({ isActive }) => `sidebar-link ${isActive ? 'active' : ''}`}>
-            Inventory
-          </NavLink>
-          <NavLink to="/requests" className={({ isActive }) => `sidebar-link ${isActive ? 'active' : ''}`}>
-            Blood Requests
-          </NavLink>
+          <NavLink to="/app/dashboard" className={({ isActive }) => `sidebar-link ${isActive ? 'active' : ''}`}>
+  Overview
+</NavLink>
+<NavLink to="/app/donors" className={({ isActive }) => `sidebar-link ${isActive ? 'active' : ''}`}>
+  Donors
+</NavLink>
+<NavLink to="/app/inventory" className={({ isActive }) => `sidebar-link ${isActive ? 'active' : ''}`}>
+  Inventory
+</NavLink>
+<NavLink to="/app/requests" className={({ isActive }) => `sidebar-link ${isActive ? 'active' : ''}`}>
+  Blood Requests
+</NavLink>
         </nav>
       </aside>
 

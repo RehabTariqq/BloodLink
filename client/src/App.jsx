@@ -5,7 +5,11 @@ import Dashboard from './pages/Dashboard';
 import Donors from './pages/Donors';
 import Inventory from './pages/Inventory';
 import Requests from './pages/Requests';
+import Home from './pages/Home';
+import About from './pages/About';
+import Contact from './pages/Contact';
 import DashboardLayout from './layouts/DashboardLayout';
+import PublicLayout from './layouts/PublicLayout';
 import { useAuth } from './context/AuthContext';
 
 function App() {
@@ -17,17 +21,21 @@ function App() {
 
   return (
     <Routes>
-      <Route path="/login" element={!isAuthenticated ? <Login /> : <Navigate to="/dashboard" />} />
-      <Route path="/register" element={!isAuthenticated ? <Register /> : <Navigate to="/dashboard" />} />
+      <Route element={<PublicLayout />}>
+        <Route path="/" element={<Home />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/contact" element={<Contact />} />
+      </Route>
 
-      <Route path="/" element={isAuthenticated ? <DashboardLayout /> : <Navigate to="/login" />}>
+      <Route path="/login" element={!isAuthenticated ? <Login /> : <Navigate to="/app/dashboard" />} />
+      <Route path="/register" element={!isAuthenticated ? <Register /> : <Navigate to="/app/dashboard" />} />
+
+      <Route path="/app" element={isAuthenticated ? <DashboardLayout /> : <Navigate to="/login" />}>
         <Route path="dashboard" element={<Dashboard />} />
         <Route path="donors" element={<Donors />} />
         <Route path="inventory" element={<Inventory />} />
         <Route path="requests" element={<Requests />} />
       </Route>
-
-      <Route path="/" element={<Navigate to={isAuthenticated ? '/dashboard' : '/login'} />} />
     </Routes>
   );
 }
