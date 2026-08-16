@@ -18,9 +18,10 @@ const Contact = () => {
 
       <div className="contact-grid">
         <div>
-          <div className="contact-info-item">
+         <div className="contact-info-item">
             <div className="label">Email</div>
-            <div className="value">contact@bloodlink.app</div>
+            <div className="value">rehabtariqq@gmail.com</div>
+        
           </div>
           <div className="contact-info-item">
             <div className="label">For Hospitals</div>
