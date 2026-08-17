@@ -1,5 +1,5 @@
 const Appointment = require('../models/Appointment');
-
+const Notification = require('../models/Notification');
 const createAppointment = async (req, res) => {
   try {
     const { donor, slotDate, slotTime, hospital, notes } = req.body;
@@ -40,7 +40,17 @@ const updateAppointment = async (req, res) => {
     const allowed = ['status', 'slotDate', 'slotTime', 'notes'];
     allowed.forEach((f) => { if (req.body[f] !== undefined) appointment[f] = req.body[f]; });
     await appointment.save();
-
+if (req.body.status === 'approved') {
+      const populated = await appointment.populate({ path: 'donor', populate: { path: 'user' } });
+      if (populated.donor?.user?._id) {
+        await Notification.create({
+          user: populated.donor.user._id,
+          type: 'appointment',
+          title: 'Appointment Approved',
+          message: `Your donation appointment on ${new Date(appointment.slotDate).toLocaleDateString()} at ${appointment.slotTime} has been approved.`
+        });
+      }
+    }
     res.status(200).json({ status: 'success', data: appointment });
   } catch (error) {
     res.status(400).json({ status: 'error', message: error.message });

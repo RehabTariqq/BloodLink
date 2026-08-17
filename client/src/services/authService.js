@@ -28,4 +28,9 @@ const getCurrentUser = () => {
   return user ? JSON.parse(user) : null;
 };
 
-export default { register, login, logout, getCurrentUser };
+const verifyPassword = async (password) => {
+  const response = await api.post('/auth/verify-password', { password });
+  return response.data;
+};
+
+export default { register, login, logout, getCurrentUser, verifyPassword };

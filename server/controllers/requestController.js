@@ -1,3 +1,5 @@
+const Notification = require('../models/Notification');
+const User = require('../models/User');
 const BloodRequest = require('../models/BloodRequest');
 const BloodUnit = require('../models/BloodUnit');
 
@@ -35,7 +37,18 @@ const createRequest = async (req, res) => {
       requiredDate,
       notes
     });
-
+     if (request.urgency === 'emergency') {
+      const staff = await User.find({ role: { $in: ['bloodBankStaff', 'hospitalAdmin', 'superAdmin'] } });
+      const notifications = staff.map((s) => ({
+        user: s._id,
+        type: 'emergency',
+        title: 'Emergency Blood Request',
+        message: `${request.patientName} needs ${request.unitsRequired} unit(s) of ${request.bloodGroup} urgently.`
+      }));
+      if (notifications.length > 0) {
+        await Notification.insertMany(notifications);
+      }
+    }
     res.status(201).json({
       status: 'success',
       data: request
@@ -225,11 +238,26 @@ const issueUnitToRequest = async (req, res) => {
     });
   }
 };
-
+// @desc    Delete a blood request (patient record)
+// @route   DELETE /api/requests/:id
+// @access  Private (staff roles only)
+const deleteRequest = async (req, res) => {
+  try {
+    const request = await BloodRequest.findById(req.params.id);
+    if (!request) {
+      return res.status(404).json({ status: 'error', message: 'Request not found' });
+    }
+    await request.deleteOne();
+    res.status(200).json({ status: 'success', message: 'Request deleted' });
+  } catch (error) {
+    res.status(400).json({ status: 'error', message: error.message });
+  }
+};
 module.exports = {
   createRequest,
   getRequests,
   getRequestById,
   updateRequestStatus,
-  issueUnitToRequest
+  issueUnitToRequest,
+  deleteRequest
 };

@@ -3,7 +3,9 @@ import api from './api';
 export const donorService = {
   create: (data) => api.post('/donors', data),
   getAll: (params) => api.get('/donors', { params }),
-  getById: (id) => api.get(`/donors/${id}`)
+  getById: (id) => api.get(`/donors/${id}`),
+  update: (id, data) => api.put(`/donors/${id}`, data),
+  delete: (id) => api.delete(`/donors/${id}`)
 };
 
 export const donationService = {
@@ -23,7 +25,8 @@ export const requestService = {
   create: (data) => api.post('/requests', data),
   getAll: (params) => api.get('/requests', { params }),
   updateStatus: (id, data) => api.put(`/requests/${id}`, data),
-  issueUnit: (id, unitId) => api.post(`/requests/${id}/issue`, { unitId })
+  issueUnit: (id, unitId) => api.post(`/requests/${id}/issue`, { unitId }),
+  delete: (id) => api.delete(`/requests/${id}`)
 };
 
 export const hospitalService = {
@@ -31,9 +34,6 @@ export const hospitalService = {
   getById: (id) => api.get(`/hospitals/${id}`)
 };
 
-export const reportService = {
-  getDashboardStats: () => api.get('/reports/dashboard')
-};
 export const appointmentService = {
   create: (data) => api.post('/appointments', data),
   getAll: (params) => api.get('/appointments', { params }),
@@ -43,4 +43,8 @@ export const appointmentService = {
 export const notificationService = {
   getAll: () => api.get('/notifications'),
   markRead: (id) => api.put(`/notifications/${id}/read`)
+};
+
+export const reportService = {
+  getDashboardStats: () => api.get('/reports/dashboard')
 };

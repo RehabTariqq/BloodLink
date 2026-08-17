@@ -16,21 +16,22 @@ const DashboardLayout = () => {
           </span>
         </div>
         <nav className="sidebar-nav">
-          <NavLink to="/app/dashboard" className={({ isActive }) => `sidebar-link ${isActive ? 'active' : ''}`}>
-            Overview
-          </NavLink>
-          <NavLink to="/app/my-profile" className={({ isActive }) => `sidebar-link ${isActive ? 'active' : ''}`}>
-            My Donor Profile
-          </NavLink>
-          <NavLink to="/app/donors" className={({ isActive }) => `sidebar-link ${isActive ? 'active' : ''}`}>
-            Donors
-          </NavLink>
-          <NavLink to="/app/inventory" className={({ isActive }) => `sidebar-link ${isActive ? 'active' : ''}`}>
-            Inventory
-          </NavLink>
-          <NavLink to="/app/requests" className={({ isActive }) => `sidebar-link ${isActive ? 'active' : ''}`}>
-            Blood Requests
-          </NavLink>
+          <NavLink to="/app/dashboard" className={({ isActive }) => `sidebar-link ${isActive ? 'active' : ''}`}>Overview</NavLink>
+          <NavLink to="/app/my-profile" className={({ isActive }) => `sidebar-link ${isActive ? 'active' : ''}`}>My Donor Profile</NavLink>
+          <NavLink to="/app/donors" className={({ isActive }) => `sidebar-link ${isActive ? 'active' : ''}`}>Donors</NavLink>
+          <NavLink to="/app/donations" className={({ isActive }) => `sidebar-link ${isActive ? 'active' : ''}`}>Donations</NavLink>
+          <NavLink to="/app/inventory" className={({ isActive }) => `sidebar-link ${isActive ? 'active' : ''}`}>Inventory</NavLink>
+          <NavLink to="/app/requests" className={({ isActive }) => `sidebar-link ${isActive ? 'active' : ''}`}>Blood Requests</NavLink>
+          <NavLink to="/app/patient-history" className={({ isActive }) => `sidebar-link ${isActive ? 'active' : ''}`}>Patient History</NavLink>
+          <NavLink to="/app/appointments" className={({ isActive }) => `sidebar-link ${isActive ? 'active' : ''}`}>Appointments</NavLink>
+          <NavLink to="/app/notifications" className={({ isActive }) => `sidebar-link ${isActive ? 'active' : ''}`}>Notifications</NavLink>
+          <NavLink to="/app/register-hospital" className={({ isActive }) => `sidebar-link ${isActive ? 'active' : ''}`}>Register Hospital</NavLink>
+
+          {(user?.role === 'hospitalAdmin' || user?.role === 'superAdmin') && (
+            <NavLink to="/app/audit-logs" className={({ isActive }) => `sidebar-link ${isActive ? 'active' : ''}`}>
+              Audit Logs
+            </NavLink>
+          )}
         </nav>
       </aside>
 

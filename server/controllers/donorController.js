@@ -128,6 +128,17 @@ const updateDonor = async (req, res) => {
       });
     }
 
+    const staffRoles = ['bloodBankStaff', 'hospitalAdmin', 'superAdmin'];
+    const isOwner = donor.user.toString() === req.user._id.toString();
+    const isStaff = staffRoles.includes(req.user.role);
+
+    if (!isOwner && !isStaff) {
+      return res.status(403).json({
+        status: 'error',
+        message: 'You can only edit your own donor profile'
+      });
+    }
+
     const allowedUpdates = [
       'bloodGroup',
       'address',
@@ -157,5 +168,20 @@ const updateDonor = async (req, res) => {
     });
   }
 };
+// @desc    Delete a donor profile
+// @route   DELETE /api/donors/:id
+// @access  Private (staff roles only)
+const deleteDonor = async (req, res) => {
+  try {
+    const donor = await Donor.findById(req.params.id);
+    if (!donor) {
+      return res.status(404).json({ status: 'error', message: 'Donor not found' });
+    }
+    await donor.deleteOne();
+    res.status(200).json({ status: 'success', message: 'Donor deleted' });
+  } catch (error) {
+    res.status(400).json({ status: 'error', message: error.message });
+  }
+};
 
-module.exports = { createDonor, getDonors, getDonorById, updateDonor };
+module.exports = { createDonor, getDonors, getDonorById, updateDonor, deleteDonor };

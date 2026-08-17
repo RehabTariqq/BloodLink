@@ -2,13 +2,16 @@ import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 
+const ELEVATED_ROLES = ['bloodBankStaff', 'hospitalAdmin'];
+
 const Register = () => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     password: '',
     role: 'donor',
-    phone: ''
+    phone: '',
+    staffPasscode: ''
   });
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
@@ -36,6 +39,8 @@ const Register = () => {
       setLoading(false);
     }
   };
+
+  const showPasscode = ELEVATED_ROLES.includes(formData.role);
 
   return (
     <div className="auth-page">
@@ -119,6 +124,21 @@ const Register = () => {
               <option value="hospitalAdmin">Hospital Admin</option>
             </select>
           </div>
+
+          {showPasscode && (
+            <div className="form-field">
+              <label className="form-label">BloodLink Staff Passcode</label>
+              <input
+                type="password"
+                name="staffPasscode"
+                value={formData.staffPasscode}
+                onChange={handleChange}
+                required
+                className="form-input"
+                placeholder="Provided by BloodLink administration"
+              />
+            </div>
+          )}
 
           <button type="submit" disabled={loading} className="btn-primary">
             {loading ? 'Creating account...' : 'Register'}

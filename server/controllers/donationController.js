@@ -1,6 +1,8 @@
+const Notification = require('../models/Notification');
 const BloodDonation = require('../models/BloodDonation');
 const Donor = require('../models/Donor');
 require('../models/Hospital');
+
 // @desc    Record a new blood donation
 // @route   POST /api/donations
 // @access  Private (bloodBankStaff, hospitalAdmin, superAdmin)
@@ -78,11 +80,13 @@ const getDonations = async (req, res) => {
     const limit = parseInt(req.query.limit) || 10;
     const skip = (page - 1) * limit;
 
+   
     const filter = {};
     if (req.query.bloodGroup) filter.bloodGroup = req.query.bloodGroup;
     if (req.query.hospital) filter.hospital = req.query.hospital;
     if (req.query.screeningStatus) filter.screeningStatus = req.query.screeningStatus;
     if (req.query.donationStatus) filter.donationStatus = req.query.donationStatus;
+    if (req.query.donor) filter.donor = req.query.donor;
 
     const donations = await BloodDonation.find(filter)
       .populate({ path: 'donor', populate: { path: 'user', select: 'name email' } })
@@ -168,7 +172,17 @@ const updateDonation = async (req, res) => {
     });
 
     await donation.save();
-
+if (req.body.screeningStatus) {
+      const populatedDonor = await require('../models/Donor').findById(donation.donor);
+      if (populatedDonor?.user) {
+        await Notification.create({
+          user: populatedDonor.user,
+          type: 'system',
+          title: 'Donation Screening Update',
+          message: `Your donation (Bag ${donation.bloodBagId}) screening result: ${req.body.screeningStatus}.`
+        });
+      }
+    }
     res.status(200).json({
       status: 'success',
       data: donation

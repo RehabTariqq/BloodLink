@@ -5,7 +5,8 @@ const {
   getRequests,
   getRequestById,
   updateRequestStatus,
-  issueUnitToRequest
+  issueUnitToRequest,
+  deleteRequest
 } = require('../controllers/requestController');
 const { protect, authorize } = require('../middleware/authMiddleware');
 
@@ -17,5 +18,6 @@ router.get('/', protect, getRequests);
 router.get('/:id', protect, getRequestById);
 router.put('/:id', protect, staffOnly, updateRequestStatus);
 router.post('/:id/issue', protect, staffOnly, issueUnitToRequest);
+router.delete('/:id', protect, staffOnly, deleteRequest);
 
 module.exports = router;

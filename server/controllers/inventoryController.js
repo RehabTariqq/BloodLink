@@ -1,3 +1,5 @@
+const Notification = require('../models/Notification');
+const User = require('../models/User');
 const BloodUnit = require('../models/BloodUnit');
 const BloodDonation = require('../models/BloodDonation');
 
@@ -48,6 +50,23 @@ const createBloodUnit = async (req, res) => {
 
     donationRecord.donationStatus = 'converted_to_unit';
     await donationRecord.save();
+    const availableCount = await BloodUnit.countDocuments({
+      bloodGroup: bloodUnit.bloodGroup,
+      status: 'available'
+    });
+
+    if (availableCount <= 3) {
+      const staff = await User.find({ role: { $in: ['bloodBankStaff', 'hospitalAdmin', 'superAdmin'] } });
+      const notifications = staff.map((s) => ({
+        user: s._id,
+        type: 'low_inventory',
+        title: 'Low Blood Stock',
+        message: `Only ${availableCount} unit(s) of ${bloodUnit.bloodGroup} remaining in stock.`
+      }));
+      if (notifications.length > 0) {
+        await Notification.insertMany(notifications);
+      }
+    }
 
     res.status(201).json({
       status: 'success',

@@ -15,6 +15,16 @@ const registerUser = async (req, res) => {
         message: 'Name, email, password, and role are required'
       });
     }
+    // Gate elevated roles behind a staff passcode
+    const elevatedRoles = ['bloodBankStaff', 'hospitalAdmin'];
+    if (elevatedRoles.includes(role)) {
+      if (!req.body.staffPasscode || req.body.staffPasscode !== process.env.STAFF_PASSCODE) {
+        return res.status(403).json({
+          status: 'error',
+          message: 'Invalid staff passcode for this role'
+        });
+      }
+    }
 
     // Check if user already exists
     const existingUser = await User.findOne({ email });
@@ -117,5 +127,40 @@ const loginUser = async (req, res) => {
     });
   }
 };
+// @desc    Verify current user's password (for step-up/elevated access)
+// @route   POST /api/auth/verify-password
+// @access  Private
+const verifyPassword = async (req, res) => {
+  try {
+    const { password } = req.body;
 
-module.exports = { registerUser, loginUser };
+    if (!password) {
+      return res.status(400).json({
+        status: 'error',
+        message: 'Password is required'
+      });
+    }
+
+    const user = await User.findById(req.user._id).select('+password');
+    const isMatch = await user.matchPassword(password);
+
+    if (!isMatch) {
+      return res.status(401).json({
+        status: 'error',
+        message: 'Incorrect password'
+      });
+    }
+
+    res.status(200).json({
+      status: 'success',
+      message: 'Verified'
+    });
+  } catch (error) {
+    res.status(500).json({
+      status: 'error',
+      message: error.message
+    });
+  }
+};
+
+module.exports = { registerUser, loginUser, verifyPassword };
