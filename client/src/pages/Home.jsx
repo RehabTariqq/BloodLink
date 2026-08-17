@@ -27,9 +27,9 @@ const Home = () => {
           inventory, verified donor records, and requests that reach the right blood type
           before it's too late.
         </p>
-        <div className="hero-actions">
-          <a href="/register" className="btn-solid">Become a Donor</a>
-          <a href="/about" className="btn-ghost">How It Works</a>
+               <div className="hero-actions">
+          <Link to="/register" className="btn-solid">Become a Donor</Link>
+          <Link to="/about" className="btn-ghost">How It Works</Link>
         </div>
       </section>
 
