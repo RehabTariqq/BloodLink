@@ -1,5 +1,3 @@
-import { Link } from 'react-router-dom';
-
 const EcgLine = ({ className }) => (
   <svg className={className} viewBox="0 0 500 120" preserveAspectRatio="none">
     <path
@@ -30,8 +28,8 @@ const Home = () => {
           before it's too late.
         </p>
         <div className="hero-actions">
-          <Link to="/register" className="btn-solid">Become a Donor</Link>
-          <Link to="/about" className="btn-ghost">How It Works</Link>
+          <a href="/register" className="btn-solid">Become a Donor</a>
+          <a href="/about" className="btn-ghost">How It Works</a>
         </div>
       </section>
 
