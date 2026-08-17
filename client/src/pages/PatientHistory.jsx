@@ -3,6 +3,16 @@ import { requestService } from '../services/dataService';
 import { useAuth } from '../context/AuthContext';
 
 const STAFF_ROLES = ['bloodBankStaff', 'hospitalAdmin', 'superAdmin'];
+const STATUS_OPTIONS = [
+  'pending',
+  'under_review',
+  'approved',
+  'partially_fulfilled',
+  'ready',
+  'fulfilled',
+  'rejected',
+  'cancelled'
+];
 
 const PatientHistory = () => {
   const { user } = useAuth();
@@ -21,6 +31,15 @@ const PatientHistory = () => {
   };
 
   useEffect(() => { load(); }, []);
+
+  const handleStatusChange = async (id, status) => {
+    try {
+      await requestService.updateStatus(id, { status });
+      load();
+    } catch (err) {
+      setError(err.response?.data?.message || 'Failed to update status');
+    }
+  };
 
   const handleDelete = async (id, name) => {
     if (!window.confirm(`Delete patient record for ${name}? This cannot be undone.`)) return;
@@ -72,7 +91,21 @@ const PatientHistory = () => {
                 <td>{r.bloodGroup}</td>
                 <td>{r.department || '—'}</td>
                 <td>{new Date(r.requiredDate).toLocaleDateString()}</td>
-                <td><span className={`status-pill status-${r.status}`}>{r.status.replace(/_/g, ' ')}</span></td>
+                <td>
+                  {isStaff ? (
+                    <select
+                      className="status-select"
+                      value={r.status}
+                      onChange={(e) => handleStatusChange(r._id, e.target.value)}
+                    >
+                      {STATUS_OPTIONS.map((opt) => (
+                        <option key={opt} value={opt}>{opt.replace(/_/g, ' ')}</option>
+                      ))}
+                    </select>
+                  ) : (
+                    <span className={`status-pill status-${r.status}`}>{r.status.replace(/_/g, ' ')}</span>
+                  )}
+                </td>
                 {isStaff && (
                   <td>
                     <button className="btn-danger" onClick={() => handleDelete(r._id, r.patientName)}>Delete</button>
