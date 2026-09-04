@@ -17,4 +17,4 @@ BloodLink is a MERN-stack hospital and blood-bank management platform for managi
 https://bloodlink-s5d7.onrender.com/
 
 ## Status
-🚧 In active development.
+In active development.
