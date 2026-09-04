@@ -9,41 +9,8 @@ BloodLink is a MERN-stack hospital and blood-bank management platform for managi
 - Node.js
 
 ## Project Structure
-BloodLink/
-│
-├── client/                 ← Frontend / React
-│   ├── public/
-│   ├── src/
-│   │   ├── assets/
-│   │   ├── components/
-│   │   ├── context/
-│   │   ├── layouts/
-│   │   ├── pages/
-│   │   ├── services/
-│   │   ├── App.jsx
-│   │   ├── App.css
-│   │   ├── index.css
-│   │   └── main.jsx
-│   ├── index.html
-│   ├── package.json
-│   └── vite.config.js
-│
-├── server/                 ← Backend / Node + Express
-│   ├── config/
-│   │   └── db.js
-│   ├── controllers/
-│   ├── middleware/
-│   │   └── authMiddleware.js
-│   ├── models/
-│   ├── routes/
-│   ├── scripts/
-│   ├── utils/
-│   ├── package.json
-│   └── server.js
-│
-├── .gitignore
-└── README.md
-
+- `client/` — React frontend
+- `server/` — Express backend
 
 
 ## Live App
