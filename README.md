@@ -2,7 +2,7 @@
 
 BloodLink is a MERN-stack hospital & blood-bank management platform. It gives hospitals, blood banks, medical staff, and donors one system to manage donor records, blood inventory, donations, blood requests, and appointments — with role-based access control and an audit trail.
 
-**🔗 Live demo:** [bloodlink-s5d7.onrender.com](https://bloodlink-s5d7.onrender.com/)
+**🔗 Live :** [bloodlink-s5d7.onrender.com](https://bloodlink-s5d7.onrender.com/)
 
 ---
 
