@@ -23,7 +23,9 @@ BloodLink is a MERN-stack hospital & blood-bank management platform. It gives ho
 ## Tech Stack
 
 **Frontend:** React 19, Vite, React Router 7, Axios
+
 **Backend:** Node.js, Express 4, MongoDB + Mongoose 8, JWT, bcryptjs
+
 **Deployment:** Render
 
 ## Project Structure
